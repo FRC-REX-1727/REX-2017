@@ -40,8 +40,7 @@ public class RobotMap {
     public static RobotDrive drivetraindrive;
     public static SpeedController flywheelflywheel;
     public static Encoder flywheelflywheelSpeed;
-    public static Solenoid gearHopperleftHopperRelease;
-    public static Solenoid gearHopperrightHopperRelease;
+    public static Solenoid gearHopperHopperRelease;
     public static AnalogGyro fRPSyawSensor;
     public static AnalogAccelerometer fRPSxAccelSensor;
     public static Encoder fRPSrightDriveSensor;
@@ -74,11 +73,9 @@ public class RobotMap {
         LiveWindow.addSensor("Flywheel", "flywheelSpeed", flywheelflywheelSpeed);
         flywheelflywheelSpeed.setDistancePerPulse(1.0);
         flywheelflywheelSpeed.setPIDSourceType(PIDSourceType.kRate);
-        gearHopperleftHopperRelease = new Solenoid(0, 0);
-        LiveWindow.addActuator("GearHopper", "leftHopperRelease", gearHopperleftHopperRelease);
+        gearHopperHopperRelease = new Solenoid(0, 0);
+        LiveWindow.addActuator("GearHopper", "HopperRelease", gearHopperHopperRelease);
         
-        gearHopperrightHopperRelease = new Solenoid(0, 1);
-        LiveWindow.addActuator("GearHopper", "rightHopperRelease", gearHopperrightHopperRelease);
         
         fRPSyawSensor = new AnalogGyro(0);
         LiveWindow.addSensor("FRPS", "yawSensor", fRPSyawSensor);

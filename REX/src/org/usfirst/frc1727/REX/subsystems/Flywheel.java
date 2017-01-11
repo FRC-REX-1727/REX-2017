@@ -50,5 +50,11 @@ public class Flywheel extends Subsystem {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    public SpeedController getFlyWheel(){
+    	return flywheel;
+    }
+    public Encoder getFlyWheelSpeed(){
+    	return flywheelSpeed;
+    }
 }
 

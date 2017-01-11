@@ -50,5 +50,14 @@ public class Drivetrain extends Subsystem {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
     }
+    public void setLeftDrive(double speed){
+    	leftDrive.set(speed);
+    }
+    public void getRightDrive(double speed){
+    	rightDrive.set(speed);
+    }
+    public RobotDrive getDrive(){
+    	return drive;
+    }
 }
 
