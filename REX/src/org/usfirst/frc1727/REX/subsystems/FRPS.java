@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 
 /**
- *
+ * Feild relative positioning system
  */
 public class FRPS extends Subsystem {
 
