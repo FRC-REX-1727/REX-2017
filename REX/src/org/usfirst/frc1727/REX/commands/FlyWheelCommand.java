@@ -1,6 +1,7 @@
 package org.usfirst.frc1727.REX.commands;
 
 import org.usfirst.frc1727.REX.PID;
+import org.usfirst.frc1727.REX.PIDNetworkTable;
 import org.usfirst.frc1727.REX.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,7 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class FlyWheelCommand extends Command {
 	public static PID pid;
-    public FlyWheelCommand() {
+	public static PIDNetworkTable pidNetworktable;
+	public FlyWheelCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.flywheel);
@@ -19,6 +21,7 @@ public class FlyWheelCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	pid = new PID(0, 0, 0);
+    	pidNetworktable = new PIDNetworkTable();
     }
 
     double targetValue;
@@ -28,6 +31,8 @@ public class FlyWheelCommand extends Command {
     	//get targetValue here
     	sensorValue = Robot.flywheel.getFlyWheelSpeed().getRate();
     	Robot.flywheel.getFlyWheel().set(pid.veloctiyPIDControl( targetValue, sensorValue));
+    	pidNetworktable.setPIDDatatable();
+    	//Robot.flywheel.getFlyWheel().set(127);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -63,9 +63,10 @@ public class OI {
     public JoystickButton flyWheelButton;
     
     //driver joystick raw constants 
+    
     public static final int DRIVER_LEFT_HORIZONTAL = 1;
-    public static final int DRIVER_LEFT_VERTICAL = 2;
-    public static final int DRIVER_RIGHT_VERTICAL = 3;
+    //public static final int DRIVER_LEFT_VERTICAL = 2;
+    //public static final int DRIVER_RIGHT_VERTICAL = 3;
     public static final int DRIVER_RIGHT_HORIZONTAL = 4;
     public static final int DRIVER_BUTTON_A = 1;
     public static final int DRIVER_BUTTON_B = 2;
@@ -73,8 +74,9 @@ public class OI {
     public static final int DRIVER_BUTTON_Y = 4;
     public static final int DRIVER_LEFT_BUMPER = 5;
     public static final int DRIVER_RIGHT_BUMPER = 6;
-        
-    
+       
+    public static final int DRIVER_LEFT_VERTICAL = 1;
+    public static final int DRIVER_RIGHT_VERTICAL = 5;
     //PID constants
     public static final double FLYWHEEL_KP = 0;
     public static final double FLYWHEEL_KI = 0;
@@ -96,7 +98,7 @@ public class OI {
         climberButton = new JoystickButton(operator, 3);
         
         flyWheelButton = new JoystickButton(operator, 1);
-        
+        //flywheelButton = new JoystickButton(driver,);
         // SmartDashboard Buttons
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
 
