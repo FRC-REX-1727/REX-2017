@@ -27,7 +27,7 @@ public class DrivetrainCommand extends Command {
     protected void execute() {
     	leftValue = Robot.oi.getdriver().getRawAxis(OI.DRIVER_LEFT_VERTICAL);
     	rightValue = Robot.oi.getdriver().getRawAxis(OI.DRIVER_RIGHT_VERTICAL);
-    	Robot.drivetrain.getDrive().tankDrive(leftValue, rightValue);
+    	Robot.drivetrain.getDrive().tankDrive((leftValue * Math.abs(leftValue)), (rightValue * Math.abs(rightValue)));
     }
 
     // Make this return true when this Command no longer needs to run execute()
