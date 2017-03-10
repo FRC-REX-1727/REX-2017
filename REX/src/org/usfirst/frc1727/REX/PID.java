@@ -2,6 +2,7 @@ package org.usfirst.frc1727.REX;
 
 import java.math.*;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -9,11 +10,17 @@ public class PID {
 	private double kP;
 	private double kI;
 	private double kD;
-	private double error;
-	private double integral;
-	private double derivative;
-	private double previousError;
-	private double power;
+	private double error = 0;
+	private double integral = 0;
+	private double derivative = 0;
+	private double previousError = 0;
+	private double power = 0;
+	private double[] stability = new double[10];
+	private int stabilityCounter;
+	private boolean tenErrorCheck = false;
+	private double averageError;
+	private double totalError;
+	private boolean stabilized = false;
 	public PID(double kP, double kI, double kD) {
 		this.kP = kP;
 		this.kI = kP;
@@ -21,7 +28,7 @@ public class PID {
 	}
 	
 	public double veloctiyPIDControl(double targetValue, double sensorValue){
-		error = getVelocity(targetValue) - getVelocity(sensorValue);
+		error = targetValue - sensorValue;
 		integral += error;
 		derivative = error - previousError;
 		if(integral >(.25/kI)){
@@ -40,7 +47,30 @@ public class PID {
 		if(power < 0){
 			power = 0;
 		}
+		stability[stabilityCounter] = error;
+		if(stabilityCounter < 9){
+			stabilityCounter++;
+		}
+		else{
 		
+			tenErrorCheck = true;
+			stabilityCounter = 0;
+		}
+		if(tenErrorCheck){
+			for(int i = 0; i < stability.length; i++){
+	    		totalError += stability[i];
+	    	}
+	    	averageError = (totalError/10);
+	    	if(averageError <= 1 && averageError >= -1){
+	    		stabilized = true;
+	    	}
+	    	else{
+	    		stabilized = false;
+	    	}
+		}
+		else{
+			stabilized = false;
+		}
 		return power;
 	}
 	public static double getVelocity(double sensorValue){
@@ -77,19 +107,83 @@ public class PID {
 		}
 		
 		previousError = error;
-		
 		power = (kP * error) + (kI * integral) + (kD * derivative);
 		
-		if(Math.abs(power) > 1){
+		if(power > 1){
 			power = 1;
 		}
+		else if( power < -1){
+			power = -1;
+		}
+		stability[stabilityCounter] = error;
+		if(stabilityCounter < 9){
+			stabilityCounter++;
+		}
+		else{
+		
+			tenErrorCheck = true;
+			stabilityCounter = 0;
+		}
+		if(tenErrorCheck){
+			for(int i = 0; i < stability.length; i++){
+	    		totalError += stability[i];
+	    	}
+	    	averageError = (totalError/10);
+	    	if(averageError <= 1 && averageError >= -1){
+	    		stabilized = true;
+	    	}
+	    	else{
+	    		stabilized = false;
+	    	}
+		}
+		else{
+			stabilized = false;
+		}
+		
 		
 		return power;
 	}
-	private final AnalogGyro gyro = RobotMap.fRPSyawSensor;
+	public double getError(){
+		return error;
+	}
+	public double getRawPower(){
+		return (kP * error) + (kI * integral) + (kD * derivative);
+	}
+	public boolean isStabilized(){
+		return stabilized;
+	}
+	private final ADXRS450_Gyro gyro = RobotMap.autonGyro;
 	public void setTurn(double degree){
 		Robot.drivetrain.getDrive().tankDrive(-getRawPIDPower(degree, gyro.getAngle()), getRawPIDPower(degree, gyro.getAngle()));
 	}
+	/*public boolean isStablized(double error){
+		stability[stabilityCounter] = error;
+		if(stabilityCounter < 10){
+			stabilityCounter++;
+		}
+		else{
+		
+			tenErrorCheck = true;
+			stabilityCounter = 0;
+		}
+		if(tenErrorCheck){
+			for(int i = 0; i < stability.length; i++){
+	    		totalError += stability[i];
+	    	}
+	    	averageError = (totalError/10);
+	    	if(averageError <= 1 && averageError >= -1){
+	    		return true;
+	    	}
+	    	else{
+	    		return false;
+	    	}
+		}
+		else{
+			return false;
+		}
+		
+		
+	}*/
 	
 	
 }
