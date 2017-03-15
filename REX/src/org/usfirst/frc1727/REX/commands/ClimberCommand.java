@@ -36,9 +36,11 @@ public class ClimberCommand extends Command {
     		Robot.climber.getWinchMotor().stopMotor();
     		Robot.climber.getClimberBreak().set(DoubleSolenoid.Value.kReverse);
     	}
+    	
     	if(!climberUseFlag){
     		Robot.climber.getClimberBreak().set(DoubleSolenoid.Value.kOff);
     	}
+    	
     	
     	/*
     	if(Robot.oi.climberBreakBtn.get()){

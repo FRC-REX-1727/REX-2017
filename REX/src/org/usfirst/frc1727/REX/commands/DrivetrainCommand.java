@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DrivetrainCommand extends Command {
 	private static Command moveBack;
-	private static final double MOVE_BACK_DISTANCE = 8;
+	private static final double MOVE_BACK_DISTANCE = -8;
     public DrivetrainCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -32,7 +32,7 @@ public class DrivetrainCommand extends Command {
     private static double rightJoy;
     private static double driveDirectionR;
     private static double driveDirectionL;
-    //pi/180
+     //pi/180
     protected void execute() {
     	
     	
@@ -126,7 +126,7 @@ public class DrivetrainCommand extends Command {
     		leftValue = leftValue * 0.6;
     		rightValue = rightValue * 0.6;
     	}
-    	else if(Math.abs(rightValue - leftValue)> 0.4){
+    	else if(Math.abs(righ	tValue - leftValue)> 0.4){
     		leftValue = leftValue*0.6;
     		rightValue = rightValue*0.6;
     	}*/
@@ -163,10 +163,14 @@ public class DrivetrainCommand extends Command {
     	else{
     		Robot.drivetrain.getRightDrive().set(rightValue);
     	}
-    	if(Robot.oi.moveBackButton.get()){
+    	if(Robot.oi.driveStraightButton.get()){
     		Robot.drivetrain.getLeftDrive().set(1);
     		Robot.drivetrain.getRightDrive().set(1);	
     	}
+    	
+    	
+    	
+    	
     	
     	System.out.println("Sonar: " + (Robot.drivetrain.getSonar().getVoltage()* OI.VOLTAGE_TO_MM));
     	

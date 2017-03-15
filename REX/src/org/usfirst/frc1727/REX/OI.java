@@ -73,6 +73,7 @@ public class OI {
     public JoystickButton emergencyBreakButton;
     public JoystickButton ledButton;
     public JoystickButton gearCatcherButton;
+    public JoystickButton driveStraightButton;
     //driver joystick raw constants 
     public static final int DRIVER_LEFT_VERTICAL = 1;
     public static final int DRIVER_RIGHT_VERTICAL = 5;
@@ -130,6 +131,7 @@ public class OI {
         emergencyBreakButton = new JoystickButton(operator, 10);
         switchCameraButton = new JoystickButton(operator, 9 );
         moveBackButton = new JoystickButton(driverRight, 2);
+        driveStraightButton = new JoystickButton(driverLeft, 2);
         climberButton = new JoystickButton(operator, 7);  
         flyWheelButton = new JoystickButton(operator, 1);
         targetRPMIncreaseBtn = new JoystickButton(operator, 3);
