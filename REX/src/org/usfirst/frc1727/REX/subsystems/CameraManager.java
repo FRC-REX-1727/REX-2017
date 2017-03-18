@@ -4,30 +4,56 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.command.Command;
 
-public class CameraManager extends Command{
+public class CameraManager {
 
-	private UsbCamera cam1;
-	private UsbCamera cam2;
-	private CvSink sink1;
-	private CvSink sink2;
+	private UsbCamera gearCamera;
+	private UsbCamera gearWideAngleCamera;
+	private CvSink gearSink;
+	private CvSink climberSink;
 	private VideoSink server;
+	public enum Camera {
+		GEAR,
+		CLIMBER;
+	};
 	
-	boolean cam1selected = true;
+	Camera current;
 	
-	public CameraManager() {
-//		cam1 = CameraServer.getInstance().startAutomaticCapture(0);
-//		cam2 = CameraServer.getInstance().startAutomaticCapture(1);
-//		server = CameraServer.getInstance().getServer();
-//		
-		
+	public CameraManager(){
+		gearCamera = CameraServer.getInstance().startAutomaticCapture(0);
+		gearWideAngleCamera = CameraServer.getInstance().startAutomaticCapture(1);
+		server = CameraServer.getInstance().getServer();
+		//Dummy sinks to keep cams open
+		gearSink = new CvSink("Gear");
+		gearSink.setSource(gearCamera);
+		gearSink.setEnabled(true);
+		climberSink = new CvSink("Climber");
+		climberSink.setSource(gearWideAngleCamera);
+		climberSink.setEnabled(true);
+		setCamera(Camera.CLIMBER);
+	}
+	
+	public void disable() {
+		//No disable
 	}
 
-	@Override
-	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+	public void setCamera(Camera camera) {
+		switch(camera){
+		case GEAR:server.setSource(gearCamera);break;
+		case CLIMBER:server.setSource(gearWideAngleCamera);break;
+		}
+		current = camera;
+	}
+
+	public Camera getCamera() {
+		return current;
+	}
+	
+	public void toggleCamera(){
+		switch(current){
+		case GEAR: setCamera(Camera.CLIMBER);break;
+		case CLIMBER: setCamera(Camera.GEAR);break;
+		}
 	}
 
 }
